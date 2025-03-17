@@ -11,7 +11,6 @@ def main():
     embedding_function = OllamaEmbeddingFunction()
     vector_db = ChromaDB(ChromaConfig())
 
-
     rag_pipeline = rag.RAGPipeline(
         llm=llm,
         embedding_function=embedding_function,
