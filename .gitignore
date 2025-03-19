@@ -2,3 +2,4 @@ venv
 chroma
 __pycache__
 .env
+documentos.json

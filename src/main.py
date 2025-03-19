@@ -17,9 +17,9 @@ def main():
         vector_db=vector_db
     )
 
-    rag_pipeline.ingest()
+    # rag_pipeline.ingest()
 
-    query = 'Quais são os sabores das pizzas?'
+    query = 'faça um resumo dos documentos'
     documents = rag_pipeline.retrieve(query=query)
     response = rag_pipeline.generate_response(query=query, documents=documents)
     print(response)
