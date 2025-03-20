@@ -17,7 +17,7 @@ def main():
         vector_db=vector_db
     )
 
-    # rag_pipeline.ingest()
+    rag_pipeline.ingest()
 
     query = 'faça um resumo dos documentos'
     documents = rag_pipeline.retrieve(query=query)
