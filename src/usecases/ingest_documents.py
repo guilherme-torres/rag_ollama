@@ -1,5 +1,5 @@
 from typing import List
-from strategies.ingest import IngestStragety
+from src.strategies.ingest import IngestStragety
 
 class IngestDocumentsUseCase:
 

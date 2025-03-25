@@ -2,7 +2,7 @@ import json
 import base64
 from typing import List
 from bs4 import BeautifulSoup
-from strategies.ingest import IngestStragety
+from src.strategies.ingest import IngestStragety
 
 class HTMLIngest(IngestStragety):
 

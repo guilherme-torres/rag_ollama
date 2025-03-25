@@ -1,7 +1,7 @@
 from typing import List
 import ollama
-from strategies.llm import LLMStrategy
-from config.ollama_config import OllamaConfig
+from src.strategies.llm import LLMStrategy
+from src.config.ollama_config import OllamaConfig
 
 class Ollama(LLMStrategy):
     

@@ -1,5 +1,5 @@
 from typing import List
-from strategies.llm import LLMStrategy
+from src.strategies.llm import LLMStrategy
 
 class GetEmbeddingsUseCase:
 

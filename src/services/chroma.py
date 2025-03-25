@@ -2,8 +2,8 @@ import uuid
 from typing import Union, List
 import chromadb
 from chromadb import ClientAPI, Collection
-from config.chroma_config import ChromaConfig
-from strategies.vector_db import VectorDBStrategy
+from src.config.chroma_config import ChromaConfig
+from src.strategies.vector_db import VectorDBStrategy
 
 class ChromaDB(VectorDBStrategy):
     

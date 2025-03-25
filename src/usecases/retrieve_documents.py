@@ -1,5 +1,5 @@
 from typing import Union, List
-from strategies.vector_db import VectorDBStrategy
+from src.strategies.vector_db import VectorDBStrategy
 
 class RetrieveDocumentsUseCase:
 

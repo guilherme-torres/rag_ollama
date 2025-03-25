@@ -1,14 +1,13 @@
-import json
 from typing import List
-from config.chroma_config import ChromaConfig
-from usecases.store_embeddings import StoreEmbeddingsUseCase
-from usecases.retrieve_documents import RetrieveDocumentsUseCase
-from usecases.get_embeddings import GetEmbeddingsUseCase
-from usecases.generate_output import GenerateOutputUseCase
-from usecases.ingest_documents import IngestDocumentsUseCase
-from strategies.llm import LLMStrategy
-from strategies.vector_db import VectorDBStrategy
-from services.html_ingest import HTMLIngest
+from .config.chroma_config import ChromaConfig
+from .usecases.store_embeddings import StoreEmbeddingsUseCase
+from .usecases.retrieve_documents import RetrieveDocumentsUseCase
+from .usecases.get_embeddings import GetEmbeddingsUseCase
+from .usecases.generate_output import GenerateOutputUseCase
+from .usecases.ingest_documents import IngestDocumentsUseCase
+from .strategies.llm import LLMStrategy
+from .strategies.vector_db import VectorDBStrategy
+from .services.html_ingest import HTMLIngest
 
 class RAGPipeline:
 
@@ -16,25 +15,11 @@ class RAGPipeline:
         self.__llm = llm
         self.__embedding_function = embedding_function
         self.__vector_db = vector_db
-
-
-    # def __load_dataset(self, dataset_path):
-    #     chunks = []
-    #     try:
-    #         with open(dataset_path, 'r', encoding='utf-8') as dataset_file:
-    #             documents = json.load(dataset_file)
-    #             for document in documents:
-    #                 chunks.append(document['text'])
-    #     except Exception as e:
-    #         print(f'Erro ao ler arquivo {dataset_path}: {e}')
-    #     return chunks
     
 
     def ingest(self):
         ingest_documents = IngestDocumentsUseCase(HTMLIngest())
         documents = ingest_documents.execute(ChromaConfig().DATASET_PATH)
-        # print(documents)
-        # documents = self.__load_dataset(ChromaConfig().DATASET_PATH)
         get_embeddings = GetEmbeddingsUseCase(self.__llm)
         embeddings = get_embeddings.execute(documents=documents)
         store_embeddings = StoreEmbeddingsUseCase(self.__vector_db)

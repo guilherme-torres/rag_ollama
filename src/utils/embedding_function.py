@@ -1,6 +1,6 @@
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from services.ollama import Ollama
-from config.ollama_config import OllamaConfig
+from src.services.ollama import Ollama
+from src.config.ollama_config import OllamaConfig
 
 class OllamaEmbeddingFunction(EmbeddingFunction):
 

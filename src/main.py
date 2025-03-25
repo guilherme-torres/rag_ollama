@@ -1,29 +1,30 @@
-import rag
-from utils.embedding_function import OllamaEmbeddingFunction
-from config.ollama_config import OllamaConfig
-from services.ollama import Ollama
-from config.chroma_config import ChromaConfig
-from services.chroma import ChromaDB
+from . import rag
+from fastapi import FastAPI
+from .utils.embedding_function import OllamaEmbeddingFunction
+from .config.ollama_config import OllamaConfig
+from .services.ollama import Ollama
+from .config.chroma_config import ChromaConfig
+from .services.chroma import ChromaDB
 
+app = FastAPI()
 
-def main():
-    llm = Ollama(OllamaConfig())
-    embedding_function = OllamaEmbeddingFunction()
-    vector_db = ChromaDB(ChromaConfig())
+llm = Ollama(OllamaConfig())
+embedding_function = OllamaEmbeddingFunction()
+vector_db = ChromaDB(ChromaConfig())
 
-    rag_pipeline = rag.RAGPipeline(
-        llm=llm,
-        embedding_function=embedding_function,
-        vector_db=vector_db
-    )
+rag_pipeline = rag.RAGPipeline(
+    llm=llm,
+    embedding_function=embedding_function,
+    vector_db=vector_db
+)
 
+@app.post('/ingest')
+def ingest():
     rag_pipeline.ingest()
 
-    query = 'faça um resumo dos documentos'
-    documents = rag_pipeline.retrieve(query=query)
-    response = rag_pipeline.generate_response(query=query, documents=documents)
-    print(response)
 
-
-if __name__ == '__main__':
-    main()
+@app.get('/query')
+def query(q: str):
+    documents = rag_pipeline.retrieve(query=q)
+    response = rag_pipeline.generate_response(query=q, documents=documents)
+    return {'response': response}
