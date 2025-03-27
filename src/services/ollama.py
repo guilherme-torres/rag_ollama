@@ -27,6 +27,7 @@ class Ollama(LLMStrategy):
         {query}
         Resposta:
         '''
+        print(prompt)
         output = ollama.generate(
             model=self.config.MODEL_NAME,
             prompt=prompt,

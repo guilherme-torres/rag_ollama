@@ -7,7 +7,8 @@ from .usecases.generate_output import GenerateOutputUseCase
 from .usecases.ingest_documents import IngestDocumentsUseCase
 from .strategies.llm import LLMStrategy
 from .strategies.vector_db import VectorDBStrategy
-from .services.html_ingest import HTMLIngest
+# from .services.html_ingest import HTMLIngest
+from .services.pdf_ingest import PdfIngest
 from .strategies.knowledge_base import KnowledgeBaseStrategy
 from .usecases.get_documents_from_source import GetDocumentsFromSourceUseCase
 
@@ -21,17 +22,16 @@ class RAGPipeline:
     
 
     def ingest(self):
-        ingest_documents = IngestDocumentsUseCase(HTMLIngest())
-        get_documents_from_source = GetDocumentsFromSourceUseCase(self.__knowledge_base)
-        documents = get_documents_from_source.execute()
-        sanitized_documents, ids = ingest_documents.execute(documents=documents)
+        ingest_documents = IngestDocumentsUseCase(PdfIngest())
+        # get_documents_from_source = GetDocumentsFromSourceUseCase(self.__knowledge_base)
+        # documents = get_documents_from_source.execute()
+        chunks = ingest_documents.execute(path=ChromaConfig().DATASET_PATH)
         get_embeddings = GetEmbeddingsUseCase(self.__llm)
-        embeddings = get_embeddings.execute(documents=sanitized_documents)
+        embeddings = get_embeddings.execute(documents=chunks)
         store_embeddings = StoreEmbeddingsUseCase(self.__vector_db)
         store_embeddings.execute(
-            documents=sanitized_documents,
+            documents=chunks,
             embeddings=embeddings,
-            ids=ids,
             embedding_function=self.__embedding_function,
             collection_name=ChromaConfig().COLLECTION_NAME
         )
@@ -41,7 +41,7 @@ class RAGPipeline:
         retrieve_documents = RetrieveDocumentsUseCase(self.__vector_db)
         results = retrieve_documents.execute(
             query=query,
-            n=3,
+            n=7,
             embedding_function=self.__embedding_function,
             collection_name=ChromaConfig().COLLECTION_NAME
         )

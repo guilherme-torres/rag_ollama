@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class IngestStragety(ABC):
 
     @abstractmethod
-    def load_documents(self, documents: Union[List, None] = None, dataset_path: Union[str, None] = None) -> Union[List[str], List]:
+    def load_documents(self, documents: Union[List, None] = None, path: Union[str, None] = None) -> Union[List[str], List]:
         pass
 
     @abstractmethod
