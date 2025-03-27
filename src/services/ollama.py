@@ -9,11 +9,11 @@ class Ollama(LLMStrategy):
         self.config = config
 
     def get_embeddings(self, documents: List[str]) -> List:
-        embeddings = ollama.embed(
+        response = ollama.embed(
             model=self.config.MODEL_NAME,
             input=documents
         )
-        return embeddings.embeddings
+        return response.embeddings
 
     def generate_output(self, query: str, documents: List[str]) -> str:
         prompt = f'''

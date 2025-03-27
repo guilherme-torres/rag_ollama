@@ -5,14 +5,18 @@ from .config.ollama_config import OllamaConfig
 from .services.ollama import Ollama
 from .config.chroma_config import ChromaConfig
 from .services.chroma import ChromaDB
+from .config.elasticsearch_config import ElasticsearchConfig
+from .services.elasticsearch import ElasticsearchService
 
 app = FastAPI()
 
 llm = Ollama(OllamaConfig())
 embedding_function = OllamaEmbeddingFunction()
 vector_db = ChromaDB(ChromaConfig())
+knowledge_base = ElasticsearchService(ElasticsearchConfig())
 
 rag_pipeline = rag.RAGPipeline(
+    knowledge_base=knowledge_base,
     llm=llm,
     embedding_function=embedding_function,
     vector_db=vector_db

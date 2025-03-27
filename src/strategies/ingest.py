@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Union
 from abc import ABC, abstractmethod
 
 class IngestStragety(ABC):
 
     @abstractmethod
-    def load_documents(self, dataset_path: str) -> List[str]:
+    def load_documents(self, documents: Union[List, None] = None, dataset_path: Union[str, None] = None) -> Union[List[str], List]:
         pass
 
     @abstractmethod
