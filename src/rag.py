@@ -30,7 +30,7 @@ class RAGPipeline:
         embeddings = get_embeddings.execute(documents=texts)
         store_embeddings = StoreEmbeddingsUseCase(self.__vector_db)
         store_embeddings.execute(
-            documents=chunks,
+            documents=texts,
             embeddings=embeddings,
             metadata=metadata,
             embedding_function=self.__embedding_function,
