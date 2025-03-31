@@ -2,7 +2,7 @@ import os
 import json
 from typing import List, Union
 from docling.document_converter import DocumentConverter
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
 from src.strategies.ingest import IngestStragety
 
 class PdfIngest(IngestStragety):
@@ -44,8 +44,13 @@ class PdfIngest(IngestStragety):
     
     def get_chunks(self, documents: List) -> List:
         """Divide documentos em chunks"""
-        text_splitter = RecursiveCharacterTextSplitter(
-            separators=['##', '\nArt.']
+        headers_to_split_on = [
+            ("#", "Header 1"),
+            ("##", "Header 2"),
+            ("###", "Header 3"),
+        ]
+        text_splitter = MarkdownHeaderTextSplitter(
+            headers_to_split_on=headers_to_split_on, strip_headers=False
         )
         data = []
         for document in documents:
@@ -54,6 +59,6 @@ class PdfIngest(IngestStragety):
                 for chunk in chunks:
                     data.append({
                         'metadata': document['metadata'],
-                        'chunk': chunk
+                        'chunk': chunk.page_content
                     })
         return data

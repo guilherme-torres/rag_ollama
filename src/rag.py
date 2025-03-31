@@ -42,7 +42,7 @@ class RAGPipeline:
         retrieve_documents = RetrieveDocumentsUseCase(self.__vector_db)
         results = retrieve_documents.execute(
             query=query,
-            n=5,
+            n=20,
             embedding_function=self.__embedding_function,
             collection_name=ChromaConfig().COLLECTION_NAME
         )

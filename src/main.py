@@ -13,10 +13,10 @@ app = FastAPI()
 llm = Ollama(OllamaConfig())
 embedding_function = OllamaEmbeddingFunction()
 vector_db = ChromaDB(ChromaConfig())
-knowledge_base = ElasticsearchService(ElasticsearchConfig())
+# knowledge_base = ElasticsearchService(ElasticsearchConfig())
 
 rag_pipeline = rag.RAGPipeline(
-    knowledge_base=knowledge_base,
+    knowledge_base=None,
     llm=llm,
     embedding_function=embedding_function,
     vector_db=vector_db
