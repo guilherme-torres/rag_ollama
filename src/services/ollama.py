@@ -18,9 +18,8 @@ class Ollama(LLMStrategy):
     def generate_output(self, query: str, documents: List[str]) -> str:
         prompt = f'''
         ## Instrução ##
-        Você é um assistente especializado que responde perguntas de forma clara e objetiva 
-        com base nos documentos fornecidos. Se a resposta não estiver nos documentos,
-        você deve dizer que não encontrou a informação.
+        Você é um assistente especializado em textos jurídicos que deve buscar informações
+        nos documentos fornecidos. Informe para o usuário caso não encontre a informação.
         ## Documentos ##
         {'\n'.join([f' - {document}' for document in documents])}
         ## Pergunta ##

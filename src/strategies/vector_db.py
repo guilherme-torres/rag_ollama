@@ -8,6 +8,7 @@ class VectorDBStrategy(ABC):
         self,
         documents: List[str],
         embeddings: List,
+        metadata: Union[List, None] = None,
         ids: Union[List[str], None] = None,
         embedding_function = None,
         collection_name: Union[str, None] = None
